@@ -1,0 +1,9 @@
+#!/bin/bash
+# This hook is run after this virtualenv is activated.
+
+# Export paths to GDAL and GEOS for django settings files to find
+export GEOS_LIBRARY_PATH=/usr/lib/libgeos_c.so.1
+export GDAL_LIBRARY_PATH=/usr/lib/libgdal.so.1
+
+# Export DATABASE_URL
+export DATABASE_URL=postgresql://aadf:password@localhost:5432/aadf

@@ -1,0 +1,11 @@
+django:
+  settings_module: aadf.settings
+virtualenv:
+  envname: virtualenv-aadf
+foreman:
+  procfile: 'false'  # Don't use foreman in the vm at all
+db:
+  name: aadf
+  user: aadf
+  password: password
+use_geodjango: 'true'
