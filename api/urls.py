@@ -16,7 +16,7 @@ class CountSerializer(GeoFeatureModelSerializer):
 
 
 # ViewSets define the view behavior.
-class CountViewSet(viewsets.ModelViewSet):
+class CountViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Count.objects.all()
     serializer_class = CountSerializer
     filter_fields = ('year', 'count_point_id', 'road')
