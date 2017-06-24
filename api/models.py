@@ -64,3 +64,4 @@ class Count(models.Model):
 
     class Meta:
         ordering = ['year', 'count_point_id']
+        unique_together = (("year", "count_point_id"),)
