@@ -1,16 +1,18 @@
 """api URL Configuration"""
 from django.conf.urls import url, include
 
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers, viewsets
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import Count
 
 
 # Serializers define the API representation.
-class CountSerializer(serializers.HyperlinkedModelSerializer):
+class CountSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Count
         fields = '__all__'
+        geo_field = 'location'
 
 
 # ViewSets define the view behavior.
