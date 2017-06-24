@@ -17,6 +17,7 @@ class CountSerializer(serializers.HyperlinkedModelSerializer):
 class CountViewSet(viewsets.ModelViewSet):
     queryset = Count.objects.all()
     serializer_class = CountSerializer
+    filter_fields = ('year', 'count_point_id', 'road')
 
 
 # Routers provide an easy way of automatically determining the URL conf.
