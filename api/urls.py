@@ -17,6 +17,13 @@ class CountSerializer(GeoFeatureModelSerializer):
 
 # ViewSets define the view behavior.
 class CountViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    retrieve:
+    Return the given AADF count.
+
+    list:
+    Return a list of all the existing counts.
+    """
     queryset = Count.objects.all()
     serializer_class = CountSerializer
     filter_fields = ('year', 'count_point_id', 'road')
