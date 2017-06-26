@@ -65,3 +65,41 @@ class Count(models.Model):
     class Meta:
         ordering = ['year', 'count_point_id']
         unique_together = (("year", "count_point_id"),)
+
+
+class Ward(models.Model):
+    """ Auto-generated model file from manage.py ogrinspect of the wards
+        shapefile """
+    objectid = models.IntegerField()
+    wd16cd = models.CharField(max_length=80)
+    wd16nm = models.CharField(max_length=80)
+    wd16nmw = models.CharField(max_length=80)
+    lad16cd = models.CharField(max_length=80)
+    lad16nm = models.CharField(max_length=80)
+    bng_e = models.IntegerField()
+    bng_n = models.IntegerField()
+    long = models.FloatField()
+    lat = models.FloatField()
+    st_areasha = models.FloatField()
+    st_lengths = models.FloatField()
+    geom = geomodels.MultiPolygonField(srid=4326)
+
+    # Auto-generated `LayerMapping` dictionary for Ward model
+    LAYER_MAPPING = {
+        'objectid': 'objectid',
+        'wd16cd': 'wd16cd',
+        'wd16nm': 'wd16nm',
+        'wd16nmw': 'wd16nmw',
+        'lad16cd': 'lad16cd',
+        'lad16nm': 'lad16nm',
+        'bng_e': 'bng_e',
+        'bng_n': 'bng_n',
+        'long': 'long',
+        'lat': 'lat',
+        'st_areasha': 'st_areasha',
+        'st_lengths': 'st_lengths',
+        'geom': 'MULTIPOLYGON',
+    }
+
+    def __str__(self):
+        return "{} - {}".format(self.lad16nm, self.wd16nm)
