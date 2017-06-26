@@ -2,6 +2,7 @@
 from django.conf.urls import url, include
 
 from rest_framework import routers, viewsets
+from rest_framework.pagination import PageNumberPagination
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import Count, Ward
@@ -20,6 +21,10 @@ class WardSerializer(GeoFeatureModelSerializer):
         model = Ward
         fields = '__all__'
         geo_field = 'geom'
+
+
+class SmallResultsSetPagination(PageNumberPagination):
+    page_size = 10
 
 
 # ViewSets define the view behavior.
@@ -47,6 +52,7 @@ class WardViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ward.objects.all()
     serializer_class = WardSerializer
     filter_fields = ('wd16cd', 'lad16cd')
+    pagination_class = SmallResultsSetPagination
 
 
 # Routers provide an easy way of automatically determining the URL conf.
