@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.contrib.gis.geos import Point
 from django.db.models import Sum
 
-from ..models import Count
+from ..models import Count, Ward
 
 
 class LoadAADFDataTests(TestCase):
@@ -55,3 +55,14 @@ class LoadAADFDataTests(TestCase):
             Sum('all_motor_vehicles')
         )['all_motor_vehicles__sum']
         self.assertEqual(actual_total_vehicles, expected_total_vehicles)
+
+
+class LoadWardDataTests(TestCase):
+
+    def _call_command(self):
+        opts = {}
+        call_command('load_wards', stdout=StringIO(), **opts)
+
+    def test_loading_data(self):
+        self._call_command()
+        self.assertEqual(Ward.objects.count(), 8668)
