@@ -58,6 +58,8 @@ class Count(models.Model):
     all_hgvs = models.PositiveIntegerField()
     all_motor_vehicles = models.PositiveIntegerField()
 
+    ward = models.ForeignKey('Ward', blank=True, null=True)
+
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
