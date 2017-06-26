@@ -105,3 +105,6 @@ class Ward(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.lad16nm, self.wd16nm)
+
+    class Meta:
+        ordering = ['wd16nm']
