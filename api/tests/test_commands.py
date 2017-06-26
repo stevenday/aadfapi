@@ -2,7 +2,7 @@ from io import StringIO
 
 from django.test import TestCase
 from django.core.management import call_command
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 from django.db.models import Sum
 
 from ..models import Count, Ward
@@ -55,6 +55,24 @@ class LoadAADFDataTests(TestCase):
             Sum('all_motor_vehicles')
         )['all_motor_vehicles__sum']
         self.assertEqual(actual_total_vehicles, expected_total_vehicles)
+
+    def test_assigning_wards(self):
+        # Create a geometry that spans the whole of Devon so that every count
+        # ends up in it
+        Ward.objects.create(
+            wd16nm='DEVON',
+            objectid='12345',
+            bng_e=12345,
+            bng_n=12345,
+            long=51,
+            lat=-4.6,
+            st_areasha=12345,
+            st_lengths=12345,
+            geom=MultiPolygon(Polygon.from_bbox((-2.8866, 50.2015, -4.6807, 51.2468)))
+        )
+        self._call_command()
+        first_row = Count.objects.get(year=2000, count_point_id=6023)
+        self.assertEqual(first_row.ward.wd16nm, 'DEVON')
 
 
 class LoadWardDataTests(TestCase):

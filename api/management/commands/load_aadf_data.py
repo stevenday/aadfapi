@@ -7,7 +7,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 
-from ...models import Count
+from ...models import Count, Ward
 
 
 class Command(BaseCommand):
@@ -39,13 +39,21 @@ class Command(BaseCommand):
         reader = csv.DictReader(csv_iterator)
         counts_added = 0
         for row in reader:
+            location = Point(
+                int(row['Easting']),
+                int(row['Northing']),
+                srid=27700
+            )
+
+            wards = Ward.objects.filter(geom__contains=location)
+            ward = None
+            if wards:
+                ward = wards[0]
+
             Count.objects.create(
                 count_point_id=int(row['CP']),
-                location=Point(
-                    int(row['Easting']),
-                    int(row['Northing']),
-                    srid=27700
-                ),
+                location=location,
+                ward=ward,
                 year=int(row['AADFYear']),
                 estimation_method=row['Estimation_method'],
                 estimation_method_detail=row['Estimation_method_detailed'],
