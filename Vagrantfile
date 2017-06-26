@@ -99,6 +99,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               settings['db']['user'],
             ]
 
+  config.vm.provision 'aadf',
+            type: 'shell',
+            path: 'config/vagrant/aadf_setup.sh',
+            args: [
+              settings['virtualenv']['envname'],
+            ]
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
